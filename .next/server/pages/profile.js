@@ -1,0 +1,76 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "pages/profile";
+exports.ids = ["pages/profile"];
+exports.modules = {
+
+/***/ "./components/Navbar.jsx":
+/*!*******************************!*\
+  !*** ./components/Navbar.jsx ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Navbar)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"react/jsx-dev-runtime\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/router */ \"next/router\");\n/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nfunction Navbar() {\n    const [buttonText, setButtonText] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(\"Profile\");\n    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_1__.useRouter)();\n    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{\n        const changeBtn = ()=>{\n            if (router.pathname === \"/profile\") setButtonText(\"Home\");\n            else if (router.pathname === \"/\") setButtonText(\"Profile\");\n        };\n        return ()=>{\n            changeBtn();\n        };\n    }, [\n        router.pathname\n    ]);\n    const routeChange = ()=>{\n        let path = `profile`;\n        router.push(path);\n    };\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n        className: \"navbarContainer\",\n        children: [\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                className: \"navbarLeft\"\n            }, void 0, false, {\n                fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n                lineNumber: 27,\n                columnNumber: 7\n            }, this),\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                className: \"navbarCenter\",\n                children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"h1\", {\n                    className: \"navbarTitle\",\n                    children: \"Soundcheck!\"\n                }, void 0, false, {\n                    fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n                    lineNumber: 29,\n                    columnNumber: 9\n                }, this)\n            }, void 0, false, {\n                fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n                lineNumber: 28,\n                columnNumber: 7\n            }, this),\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n                className: \"navbarRight\",\n                children: /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"button\", {\n                    onClick: routeChange,\n                    className: \"profileBtn\",\n                    children: buttonText\n                }, void 0, false, {\n                    fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n                    lineNumber: 32,\n                    columnNumber: 9\n                }, this)\n            }, void 0, false, {\n                fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n                lineNumber: 31,\n                columnNumber: 7\n            }, this)\n        ]\n    }, void 0, true, {\n        fileName: \"/Users/joshualevy/Desktop/soundcheck/components/Navbar.jsx\",\n        lineNumber: 26,\n        columnNumber: 5\n    }, this);\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9jb21wb25lbnRzL05hdmJhci5qc3guanMiLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7QUFBNkI7QUFDVztBQUNJO0FBRTdCLFNBQVNHLFNBQVM7SUFDL0IsTUFBTSxDQUFDQyxZQUFZQyxjQUFjLEdBQUdKLCtDQUFRQSxDQUFDO0lBRTdDLE1BQU1LLFNBQVNOLHNEQUFTQTtJQUV4QkUsZ0RBQVNBLENBQUMsSUFBTTtRQUNkLE1BQU1LLFlBQVksSUFBTTtZQUN0QixJQUFJRCxPQUFPRSxRQUFRLEtBQUssWUFBWUgsY0FBYztpQkFDN0MsSUFBSUMsT0FBT0UsUUFBUSxLQUFLLEtBQUtILGNBQWM7UUFDbEQ7UUFDQSxPQUFPLElBQU07WUFDWEU7UUFDRjtJQUNGLEdBQUc7UUFBQ0QsT0FBT0UsUUFBUTtLQUFDO0lBRXBCLE1BQU1DLGNBQWMsSUFBTTtRQUN4QixJQUFJQyxPQUFPLENBQUMsT0FBTyxDQUFDO1FBQ3BCSixPQUFPSyxJQUFJLENBQUNEO0lBQ2Q7SUFFQSxxQkFDRSw4REFBQ0U7UUFBSUMsV0FBVTs7MEJBQ2IsOERBQUNEO2dCQUFJQyxXQUFVOzs7Ozs7MEJBQ2YsOERBQUNEO2dCQUFJQyxXQUFVOzBCQUNiLDRFQUFDQztvQkFBR0QsV0FBVTs4QkFBYzs7Ozs7Ozs7Ozs7MEJBRTlCLDhEQUFDRDtnQkFBSUMsV0FBVTswQkFDYiw0RUFBQ0U7b0JBQU9DLFNBQVNQO29CQUFhSSxXQUFVOzhCQUNyQ1Q7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBS1gsQ0FBQyIsInNvdXJjZXMiOlsid2VicGFjazovL3NvdW5kY2hlY2svLi9jb21wb25lbnRzL05hdmJhci5qc3g/M2FhYyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXCIuL25hdmJhci5tb2R1bGUuY3NzXCI7XG5pbXBvcnQgeyB1c2VSb3V0ZXIgfSBmcm9tIFwibmV4dC9yb3V0ZXJcIjtcbmltcG9ydCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QgfSBmcm9tIFwicmVhY3RcIjtcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gTmF2YmFyKCkge1xuICBjb25zdCBbYnV0dG9uVGV4dCwgc2V0QnV0dG9uVGV4dF0gPSB1c2VTdGF0ZShcIlByb2ZpbGVcIik7XG5cbiAgY29uc3Qgcm91dGVyID0gdXNlUm91dGVyKCk7XG5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBjb25zdCBjaGFuZ2VCdG4gPSAoKSA9PiB7XG4gICAgICBpZiAocm91dGVyLnBhdGhuYW1lID09PSBcIi9wcm9maWxlXCIpIHNldEJ1dHRvblRleHQoXCJIb21lXCIpO1xuICAgICAgZWxzZSBpZiAocm91dGVyLnBhdGhuYW1lID09PSBcIi9cIikgc2V0QnV0dG9uVGV4dChcIlByb2ZpbGVcIik7XG4gICAgfTtcbiAgICByZXR1cm4gKCkgPT4ge1xuICAgICAgY2hhbmdlQnRuKCk7XG4gICAgfTtcbiAgfSwgW3JvdXRlci5wYXRobmFtZV0pO1xuXG4gIGNvbnN0IHJvdXRlQ2hhbmdlID0gKCkgPT4ge1xuICAgIGxldCBwYXRoID0gYHByb2ZpbGVgO1xuICAgIHJvdXRlci5wdXNoKHBhdGgpO1xuICB9O1xuXG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9XCJuYXZiYXJDb250YWluZXJcIj5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibmF2YmFyTGVmdFwiPjwvZGl2PlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJuYXZiYXJDZW50ZXJcIj5cbiAgICAgICAgPGgxIGNsYXNzTmFtZT1cIm5hdmJhclRpdGxlXCI+U291bmRjaGVjayE8L2gxPlxuICAgICAgPC9kaXY+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cIm5hdmJhclJpZ2h0XCI+XG4gICAgICAgIDxidXR0b24gb25DbGljaz17cm91dGVDaGFuZ2V9IGNsYXNzTmFtZT1cInByb2ZpbGVCdG5cIj5cbiAgICAgICAgICB7YnV0dG9uVGV4dH1cbiAgICAgICAgPC9idXR0b24+XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgKTtcbn1cbiJdLCJuYW1lcyI6WyJ1c2VSb3V0ZXIiLCJ1c2VTdGF0ZSIsInVzZUVmZmVjdCIsIk5hdmJhciIsImJ1dHRvblRleHQiLCJzZXRCdXR0b25UZXh0Iiwicm91dGVyIiwiY2hhbmdlQnRuIiwicGF0aG5hbWUiLCJyb3V0ZUNoYW5nZSIsInBhdGgiLCJwdXNoIiwiZGl2IiwiY2xhc3NOYW1lIiwiaDEiLCJidXR0b24iLCJvbkNsaWNrIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./components/Navbar.jsx\n");
+
+/***/ }),
+
+/***/ "./pages/profile.js":
+/*!**************************!*\
+  !*** ./pages/profile.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ \"react/jsx-dev-runtime\");\n/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Navbar */ \"./components/Navbar.jsx\");\n\n\n\nfunction Profile() {\n    return /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(\"div\", {\n        className: \"profileContainer\",\n        children: [\n            /*#__PURE__*/ (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_Navbar__WEBPACK_IMPORTED_MODULE_2__[\"default\"], {}, void 0, false, {\n                fileName: \"/Users/joshualevy/Desktop/soundcheck/pages/profile.js\",\n                lineNumber: 7,\n                columnNumber: 7\n            }, this),\n            \"Profile Page\"\n        ]\n    }, void 0, true, {\n        fileName: \"/Users/joshualevy/Desktop/soundcheck/pages/profile.js\",\n        lineNumber: 6,\n        columnNumber: 5\n    }, this);\n}\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Profile);\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9wYWdlcy9wcm9maWxlLmpzLmpzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBMEI7QUFDZ0I7QUFFMUMsU0FBU0UsVUFBVTtJQUNqQixxQkFDRSw4REFBQ0M7UUFBSUMsV0FBVTs7MEJBQ2IsOERBQUNILDBEQUFNQTs7Ozs7WUFBRzs7Ozs7OztBQUloQjtBQUVBLGlFQUFlQyxPQUFPQSxFQUFDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vc291bmRjaGVjay8uL3BhZ2VzL3Byb2ZpbGUuanM/MDhkMCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVhY3QgZnJvbSBcInJlYWN0XCI7XG5pbXBvcnQgTmF2YmFyIGZyb20gXCIuLi9jb21wb25lbnRzL05hdmJhclwiO1xuXG5mdW5jdGlvbiBQcm9maWxlKCkge1xuICByZXR1cm4gKFxuICAgIDxkaXYgY2xhc3NOYW1lPVwicHJvZmlsZUNvbnRhaW5lclwiPlxuICAgICAgPE5hdmJhciAvPlxuICAgICAgUHJvZmlsZSBQYWdlXG4gICAgPC9kaXY+XG4gICk7XG59XG5cbmV4cG9ydCBkZWZhdWx0IFByb2ZpbGU7XG4iXSwibmFtZXMiOlsiUmVhY3QiLCJOYXZiYXIiLCJQcm9maWxlIiwiZGl2IiwiY2xhc3NOYW1lIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/profile.js\n");
+
+/***/ }),
+
+/***/ "next/router":
+/*!******************************!*\
+  !*** external "next/router" ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = require("next/router");
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "react" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("react");
+
+/***/ }),
+
+/***/ "react/jsx-dev-runtime":
+/*!****************************************!*\
+  !*** external "react/jsx-dev-runtime" ***!
+  \****************************************/
+/***/ ((module) => {
+
+module.exports = require("react/jsx-dev-runtime");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../webpack-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = (__webpack_exec__("./pages/profile.js"));
+module.exports = __webpack_exports__;
+
+})();

@@ -1,6 +1,0 @@
----
-database:
-  endpoint: "soundcheck-database.czj5eib3wrvz.us-east-2.rds.amazonaws.com"
-  port: 5432
-  username: "sc_db"
-  auth_key: "soundcheckadmin123"
