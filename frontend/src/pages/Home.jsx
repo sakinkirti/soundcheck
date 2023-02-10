@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import PostsLayout from '../components/PostsLayout'
 import RightBar from '../components/RightBar'
 
 const Home = () => {
@@ -7,7 +8,7 @@ const Home = () => {
     <div>
       <Navbar/>
       <RightBar/>
-      <h1>HOME Page</h1>
+      <PostsLayout/>
     </div>
   )
 }
