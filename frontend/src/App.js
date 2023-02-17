@@ -2,12 +2,16 @@ import "./index.css"
 import {Routes, Route, Navigate} from 'react-router-dom'
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Start from "./pages/Start";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
     <Routes>
       <Route exact path='/' element={<Home/>}/>
       <Route exact path="profile" element={<Profile/>}/>
+      <Route exact path='start' element={<Start/>}/>
+      <Route exact path='signup' element={<Signup/>}/>
       <Route path='*' element={<Navigate to='/'/>}/>
     </Routes>
     // <div>
