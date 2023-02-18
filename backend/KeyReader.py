@@ -36,6 +36,3 @@ class KeyReader:
         """
 
         return self.key_dictionary["database"]
-
-reader = KeyReader("key.yml")
-print(reader.get_db_details())
