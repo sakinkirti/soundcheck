@@ -1,0 +1,53 @@
+.leftContainer {
+  height: 93%;
+  float: left;
+  width: 33%;
+  margin-left: 10px;
+  margin-top: 10px;
+  background-color: aliceblue;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.rightContainer {
+  height: 80%;
+  width: 60%;
+  margin-right: 10px;
+  margin-top: 10px;
+  background-color: aliceblue;
+  float: right;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.rightTopContainer {
+  margin: 10px;
+  height: 20%;
+}
+
+.rightBottomContainer {
+  background-color: white;
+  height: 65%;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 25px;
+}
+
+.followersContainer {
+  width: 47%;
+  background-color: white;
+  float: left;
+  height: 100%;
+  border-radius: 25px;
+  padding-top: 4%;
+}
+
+.followingContainer {
+  width: 47%;
+  background-color: white;
+  float: right;
+  border-radius: 25px;
+  height: 100%;
+  padding-top: 4%;
+}

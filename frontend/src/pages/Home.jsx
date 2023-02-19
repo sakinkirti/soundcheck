@@ -5,7 +5,7 @@ import RightBar from '../components/RightBar'
 
 const Home = () => {
   return (
-    <div>
+    <div style={{zIndex: '1', position:'relative'}}>
       <Navbar/>
       <RightBar/>
       <PostsLayout/>
