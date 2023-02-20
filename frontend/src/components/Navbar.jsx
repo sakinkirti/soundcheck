@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {MdSettings} from 'react-icons/md'
 import {FaSearch} from 'react-icons/fa'
-import ProfileMin from './ProfileMin';
+import ProfileMin from './ProfileComps/ProfileMin';
 
 export default function Navbar() {
 
@@ -60,7 +60,9 @@ export default function Navbar() {
     </div>
     <div className='searchDropdown' style={{visibility: dropdownOpen ? 'visible' : 'hidden',}}>
       <input placeholder='Search for Friends' className='searchInput'></input>
-      <ProfileMin></ProfileMin>
+      <div style={{marginLeft:'25px', width:'90%'}}>
+        <ProfileMin></ProfileMin>
+      </div>
     </div>
     </>
   )
