@@ -17,12 +17,13 @@
 }
 
 .profileBtn {
-  background-color: var(--color-wenge);
-  color: white;
+  background-color: white;
+  color: black;
   border-radius: 50px;
   align-items: right;
   width: 75px;
   float: right;
+  border-color: white;
 }
 
 .searchDropdown {

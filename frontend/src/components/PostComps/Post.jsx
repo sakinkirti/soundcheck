@@ -12,8 +12,8 @@ const Post = props => {
     <div className='grid' style={{textAlign:'center', backgroundColor: 'antiquewhite', borderRadius:'25px', padding: '10px', height: '200px'}}>
       <ProfileMin username={username} style={{float:'center'}}/>
       <AlbumImg img={album}/>
-      <ArtistName artist={artist}/>
       <SongName song={song}/>
+      <ArtistName artist={artist}/>
     </div>
   )
 }

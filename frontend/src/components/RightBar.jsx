@@ -5,8 +5,7 @@ import SongName from './PostComps/SongName'
 import ProfileMin from './ProfileComps/ProfileMin'
 import './rightbar.css'
 
-const RightBar = () => {
-  const username = 'username'
+const RightBar = ({username, albumImg, artist, song}) => {
   return (
     <div className='rightbarContainer'>
       Your Song
@@ -14,11 +13,11 @@ const RightBar = () => {
         <ProfileMin username={username} style={{float:'left',}}/>
       </div>
       <div className='rightbarMid'>
-        <AlbumImg style={{paddingBottom: '20px'}} img='placeholder'/>
+        <AlbumImg className='albumImg' img={albumImg}/>
       </div>
       <div className='rightbarBottom'>
-        <ArtistName artist='placeholder'/>
-        <SongName song='placeholder'/>
+        <SongName song={song}/>
+        <ArtistName artist={artist}/>
       </div>
     </div>
   )

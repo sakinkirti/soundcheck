@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import {MdSettings} from 'react-icons/md'
 import {FaSearch} from 'react-icons/fa'
 import ProfileMin from './ProfileComps/ProfileMin';
+import { Button } from 'react-bootstrap';
 
 export default function Navbar() {
 
@@ -55,13 +56,13 @@ export default function Navbar() {
         <h1 className='navbarTitle'>Soundcheck!</h1>
       </div>
       <div className='navbarRight'>
-        <button onClick={routeChange} className='profileBtn'>{buttonText}</button>
+        <Button onClick={routeChange} className='profileBtn'>{buttonText}</Button>
       </div>
     </div>
     <div className='searchDropdown' style={{visibility: dropdownOpen ? 'visible' : 'hidden',}}>
       <input placeholder='Search for Friends' className='searchInput'></input>
       <div style={{marginLeft:'25px', width:'90%'}}>
-        <ProfileMin></ProfileMin>
+        <ProfileMin username='username'/>
       </div>
     </div>
     </>

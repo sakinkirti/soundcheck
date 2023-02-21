@@ -22,8 +22,9 @@
   height: 100px;
   justify-content: center;
   text-align: center;
-  padding: 10%;
-
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: x-small;
 }
 
 .rightbarBottom {

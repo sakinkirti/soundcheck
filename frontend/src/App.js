@@ -5,6 +5,8 @@ import Profile from "./pages/Profile";
 import Start from "./pages/Start";
 import Signup from "./pages/Signup";
 import Settings from "./pages/Settings";
+import NoPostYet from "./pages/NoPostYet";
+import AddPost from "./pages/AddPost";
 
 function App() {
   return (
@@ -14,12 +16,10 @@ function App() {
       <Route exact path='start' element={<Start/>}/>
       <Route exact path='signup' element={<Signup/>}/>
       <Route exact path='settings' element={<Settings/>}/>
+      <Route exact path='nopost' element={<NoPostYet/>}/>
+      <Route exact path='addpost' element={<AddPost/>}/>
       <Route path='*' element={<Navigate to='/'/>}/>
     </Routes>
-    // <div>
-    //   <button className="bg-red-500">Text</button>
-    //   <h1>TEXT</h1>
-    // </div>
   );
 }
 
