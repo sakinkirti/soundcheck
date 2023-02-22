@@ -44,7 +44,7 @@ function PostsLayout() {
 ]
 
   return (
-    <div style={{margin: '10px', width: '72%', height: '90vh'}}>
+    <div style={{margin: '10px', width: '72%', height: '90vh', overflowY:'scroll'}}>
       <h1>Your Friend's Posts</h1>
       <PostGrid colCount={2} md={6}> 
         {
