@@ -1,9 +1,12 @@
 import React from 'react'
 import defaultPic from '../../public/default_profile.png'
 
-const ProfilePic = () => {
+const ProfilePic = (styles, src) => {
   return (
-    <img style={{height:'22px', width:'22px'}} src={defaultPic} alt="default"></img>
+    <div>
+      <img style={{styles}} src={defaultPic} alt="default"/>
+    </div>
+    
   )
 }
 

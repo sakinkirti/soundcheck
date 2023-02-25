@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Settings from "./pages/Settings";
 import NoPostYet from "./pages/NoPostYet";
 import AddPost from "./pages/AddPost";
+import ProfileView from "./pages/ProfileView";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route exact path='settings' element={<Settings/>}/>
       <Route exact path='nopost' element={<NoPostYet/>}/>
       <Route exact path='addpost' element={<AddPost/>}/>
+      <Route exact path='viewprofile' element={<ProfileView/>}/>
       <Route path='*' element={<Navigate to='/'/>}/>
     </Routes>
   );
