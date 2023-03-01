@@ -15,10 +15,10 @@ const Post = props => {
 
   useEffect(() => {
     if (!liked) {
-      likes.current = likes.current + 1;
+      likes.current += 1;
     }
     else {
-      likes.current = likes.current - 1;
+      likes.current -= 1;
     }
   },[liked]);
 
@@ -38,8 +38,6 @@ const Post = props => {
           <LikeCount count={likes.current}/>
         </div>
       </div>
-
-
     </div>
   )
 }
