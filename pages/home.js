@@ -34,11 +34,11 @@ function Home({ spotifyData, userPost, postStreak }) {
         }}
       >
         {/* main content */}
-        <Post
+        {/* <Post
           post={userPost}
           currentlyPlaying={currentlyPlaying}
           setCurrentlyPlaying={setCurrentlyPlaying}
-        />
+        /> */}
       </Flex>
 
       <Rightbar
