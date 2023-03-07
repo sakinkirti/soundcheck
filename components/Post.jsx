@@ -17,12 +17,12 @@ import { BsSpotify, BsPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 import { useRef, useEffect, useState } from "react";
 import { truncateText } from "@/utils/truncateText";
 import { pluralize } from "@/utils/pluralize";
-import { notifications } from "@mantine/notifications";
-import axios from "axios";
 import { useDisclosure } from "@mantine/hooks";
 import CommentModal from "./modals/CommentModal";
 import LikeModal from "./modals/LikeModal";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import { notifications } from "@mantine/notifications";
 
 function Post({
   post,
@@ -31,21 +31,6 @@ function Post({
   withHeader = true,
 }) {
   const [currentPost, setCurrentPost] = useState(post);
-  // const {
-  //   _id,
-  //   songName,
-  //   songUrl,
-  //   previewUrl,
-  //   artists,
-  //   albumName,
-  //   albumImage,
-  //   likes,
-  //   comments,
-  //   username,
-  //   userImage,
-  //   createdAt,
-  // } = currentPost?.;
-
   const theme = useMantineTheme();
   const [imageHovered, setImageHovered] = useState(false);
   const [songProgress, setSongProgress] = useState(0);
@@ -56,11 +41,67 @@ function Post({
   const [commentOpen, { open: openComment, close: closeComment }] =
     useDisclosure(false);
   const [likeOpen, { open: openLike, close: closeLike }] = useDisclosure(false);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
   const isLiked = !!currentPost?.likes?.find(
     (like) => like.username === session?.user?.name
   );
+  const isCommented = !!currentPost?.comments?.find(
+    (comment) => comment.username === session?.user?.name
+  );
   const numComments = currentPost?.comments?.length || 0;
   const numLikes = currentPost?.likes?.length || 0;
+
+  const likePost = async () => {
+    setIsLikeLoading(true);
+    openLike();
+    const now = new Date().toISOString();
+    const oldLikes = currentPost?.likes || [];
+    if (isLiked) {
+      setCurrentPost({
+        ...currentPost,
+        likes: oldLikes.filter((like) => like.username !== session?.user?.name),
+      });
+    } else {
+      setCurrentPost({
+        ...currentPost,
+        likes: [
+          ...oldLikes,
+          {
+            username: session?.user?.name,
+            userImage: session?.user?.image,
+            createdAt: now,
+          },
+        ],
+      });
+    }
+    try {
+      await axios.post("/api/protected/like", {
+        postID: post?._id,
+        name: session?.user?.name,
+        type: isLiked ? "unlike" : "like",
+        createdAt: now,
+      });
+      notifications.show({
+        title: "Success",
+        message: `You ${isLiked ? "unliked" : "liked"} ${
+          currentPost?.username
+        }'s post`,
+        color: "green",
+      });
+      setIsLikeLoading(false);
+    } catch {
+      setIsLikeLoading(false);
+      setCurrentPost({
+        ...currentPost,
+        likes: [...oldLikes],
+      });
+      notifications.show({
+        title: "Error",
+        message: "Something went wrong",
+        color: "red",
+      });
+    }
+  };
 
   useEffect(() => {
     audioRef.current.addEventListener("play", () => {
@@ -91,11 +132,11 @@ function Post({
         setPost={setCurrentPost}
         opened={commentOpen}
         close={closeComment}
+        isCommented={isCommented}
       />
       <LikeModal
-        session={session}
         post={currentPost}
-        setPost={setCurrentPost}
+        isLoading={isLikeLoading}
         opened={likeOpen}
         close={closeLike}
       />
@@ -118,7 +159,7 @@ function Post({
           <Flex
             w="200px"
             justify={"space-between"}
-            align={"start"}
+            align={"end"}
             pt="0.75rem"
             pb="0.25rem"
             mb={"0.25rem"}
@@ -131,14 +172,21 @@ function Post({
               username={currentPost?.username}
               userImage={currentPost?.userImage}
             />
-            <Button.Group spacing={"sm"}>
+            <Button.Group>
               <Tooltip
                 label={`${numComments} ${pluralize("comment", numComments)}`}
               >
                 <ActionIcon
+                  title={
+                    !isCommented ? "Comment on this post" : "View comments"
+                  }
                   radius="xl"
+                  size={"1.6rem"}
                   variant={"transparent"}
                   onClick={openComment}
+                  sx={{
+                    color: isCommented ? theme.colors.blue[3] : "inherit",
+                  }}
                 >
                   <MdOutlineComment />
                 </ActionIcon>
@@ -153,9 +201,11 @@ function Post({
                 }}
               >
                 <ActionIcon
+                  title={`${isLiked ? "Unlike" : "Like"} this post`}
                   variant={"transparent"}
                   radius="xl"
-                  onClick={openLike}
+                  size={"1.6rem"}
+                  onClick={likePost}
                   sx={(theme) => ({
                     color: isLiked ? theme.colors.heartRed[8] : "inherit",
                     "&[data-disabled]": {

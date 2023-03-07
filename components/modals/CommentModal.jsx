@@ -9,10 +9,11 @@ import {
   Center,
 } from "@mantine/core";
 import ProfileLink from "../ProfileLink";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { AiOutlineComment } from "react-icons/ai";
 import { notifications } from "@mantine/notifications";
+import { truncateText } from "@/utils/truncateText";
 
 const CommentCard = ({ text, username, userImage }) => {
   return (
@@ -36,6 +37,7 @@ const CommentCard = ({ text, username, userImage }) => {
 export default function CommentModal({
   post,
   setPost,
+  isCommented,
   session,
   opened,
   close,
@@ -43,19 +45,16 @@ export default function CommentModal({
 }) {
   const [userComment, setUserComment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const hasCommented = !!post?.comments?.find(
-    (comment) => comment.username === session?.user?.name
-  );
   const postDate = new Date(post?.createdAt).toLocaleString("en-US", {
-    month: "short",
+    month: "long",
     day: "numeric",
     year: "numeric",
   });
 
   const postComment = async () => {
     setIsLoading(true);
-    const oldComments = post?.comments;
     const now = new Date().toISOString();
+    const oldComments = post?.comments || [];
     setPost({
       ...post,
       comments: [
@@ -77,7 +76,7 @@ export default function CommentModal({
       });
       notifications.show({
         title: "Success",
-        message: "Comment posted",
+        message: `You commented on ${post?.username}&apos;s post`,
         color: "green",
       });
       setIsLoading(false);
@@ -97,9 +96,11 @@ export default function CommentModal({
 
   return (
     <Modal.Root
+      returnFocus={false}
       opened={opened}
       centered
       padding={"xl"}
+      size="sm"
       onClose={() => {
         if (!isLoading) {
           setUserComment("");
@@ -120,7 +121,7 @@ export default function CommentModal({
                   color: "rgba(255, 255, 255, 0.5)",
                 }}
               >
-                {session?.user?.name}&apos;s post | {postDate}
+                {truncateText(post?.username, 16)}&apos;s post | {postDate}
               </Text>
             </Stack>
 
@@ -130,7 +131,7 @@ export default function CommentModal({
 
         <Modal.Body>
           <Flex w={"100%"} align={"start"} direction={"column"}>
-            {!isUser && !hasCommented && (
+            {!isUser && !isCommented && (
               <Stack w={"100%"} mb={"xl"} spacing={12}>
                 <TextInput
                   data-autoFocus
@@ -150,7 +151,7 @@ export default function CommentModal({
               </Stack>
             )}
 
-            {post?.comments?.length === 0 ? (
+            {!post?.comments?.length ? (
               <Center w={"100%"}>
                 <Text>No comments yet</Text>
               </Center>

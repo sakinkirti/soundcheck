@@ -61,14 +61,7 @@ function Rightbar({
         close={closeComment}
         isUser={true}
       />
-      <LikeModal
-        session={session}
-        post={post}
-        setPost={setPost}
-        opened={likeOpen}
-        close={closeLike}
-        isUser={true}
-      />
+      <LikeModal post={post} opened={likeOpen} close={closeLike} />
 
       <Flex
         w={"20%"}

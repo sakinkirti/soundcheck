@@ -9,7 +9,7 @@
     "lint": "next lint",
     "sanity-dev": "cd sanity && npm run dev",
     "sanity-deploy": "cd sanity && npm run deploy",
-    "postinstall": "npx patch-package"
+    "postinstall": "npx patch-package && cd sanity && npm install && cd .."
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

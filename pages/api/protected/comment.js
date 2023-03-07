@@ -22,8 +22,8 @@ export default async function handler(req, res) {
       .patch(postID)
       .append("comments", [
         {
-          _type: "comment",
           _key: createdAt,
+          _type: "comment",
           text,
           user: {
             _type: "reference",

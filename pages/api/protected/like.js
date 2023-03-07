@@ -25,11 +25,11 @@ export default async function handler(req, res) {
           {
             _type: "like",
             _key: createdAt,
+            createdAt,
             user: {
               _type: "reference",
               _ref: name,
             },
-            createdAt,
           },
         ])
         .commit();
