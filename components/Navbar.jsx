@@ -67,11 +67,9 @@ function Navbar({ children }) {
                 sx={(theme) => ({
                   borderRadius: "0.5rem",
                   padding: "0.5rem",
-                  backgroundColor: menuHover
-                    ? theme.colors.lightGray[0]
-                    : "transparent",
+                  backgroundColor: menuHover ? "#141517" : "transparent",
                   "&:hover": {
-                    backgroundColor: theme.colors.lightGray[0],
+                    backgroundColor: "#141517",
                   },
                 })}
               >

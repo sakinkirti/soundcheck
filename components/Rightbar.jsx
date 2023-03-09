@@ -1,36 +1,25 @@
-import { Flex, Button, Stack } from "@mantine/core";
+import { Flex, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState, useRef, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
 import SelectSongModal from "./modals/SelectSongModal";
-import { pluralize } from "@/utils/pluralize";
-import CommentModal from "./modals/CommentModal";
-import LikeModal from "./modals/LikeModal";
-import { MdOutlineComment } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-import { AiFillFire } from "react-icons/ai";
 
 function Rightbar({
   spotifyData,
-  userPost,
+  post,
+  setPost,
   currentlyPlaying,
   setCurrentlyPlaying,
-  postStreak,
+  timeAgo,
 }) {
-  const [post, setPost] = useState(userPost);
+  const [originalCaption, setOriginalCaption] = useState(post?.caption || "");
   const hasPostedToday = !!post;
   const [selectSongOpened, { open: openSelectSong, close: closeSelectSong }] =
     useDisclosure(!hasPostedToday);
-  const [likeOpen, { open: openLike, close: closeLike }] = useDisclosure(false);
-  const [commentOpen, { open: openComment, close: closeComment }] =
-    useDisclosure(false);
-  const [streak, setStreak] = useState(postStreak);
   const selectRef = useRef(null);
   const { data: session } = useSession();
-
-  const [numComments, setNumComments] = useState(post?.comments?.length || 0);
-  const [numLikes, setNumLikes] = useState(post?.likes?.length || 0);
+  const [editingCaption, setEditingCaption] = useState(!originalCaption);
 
   useEffect(() => {
     if (selectSongOpened) {
@@ -49,22 +38,17 @@ function Rightbar({
         spotifyData={spotifyData}
         currentlyPlaying={currentlyPlaying}
         setCurrentlyPlaying={setCurrentlyPlaying}
-        setStreak={setStreak}
         session={session}
+        postID={post?._id}
         setPost={setPost}
+        originalCaption={originalCaption}
+        setOriginalCaption={setOriginalCaption}
+        editingCaption={editingCaption}
+        setEditingCaption={setEditingCaption}
       />
-      <CommentModal
-        session={session}
-        post={post}
-        setPost={setPost}
-        opened={commentOpen}
-        close={closeComment}
-        isUser={true}
-      />
-      <LikeModal post={post} opened={likeOpen} close={closeLike} />
 
       <Flex
-        w={"20%"}
+        w={"25%"}
         sx={(theme) => ({
           borderLeft: `1px solid ${theme.colors.lightWhite[6]}`,
           boxShadow: `0 0.5px 0px 0.5px ${theme.colors.lightWhite[6]}`,
@@ -74,7 +58,7 @@ function Rightbar({
         direction={"column"}
         style={{
           position: "fixed",
-          left: "80%",
+          left: "75%",
           height: "calc(100vh - 5rem)",
           transform: "translateY(5rem)",
           zIndex: 1,
@@ -88,79 +72,18 @@ function Rightbar({
             h={"100%"}
           >
             <Post
-              withHeader={false}
+              isUser={true}
               post={post}
+              setPost={setPost}
               currentlyPlaying={currentlyPlaying}
               setCurrentlyPlaying={setCurrentlyPlaying}
+              originalCaption={originalCaption}
+              setOriginalCaption={setOriginalCaption}
+              editingCaption={editingCaption}
+              setEditingCaption={setEditingCaption}
+              timeAgo={timeAgo}
+              isRightbar
             />
-            <Stack w="100%" mt={"1rem"} spacing={10}>
-              <Button
-                leftIcon={<AiFillFire fontSize={"1.1rem"} />}
-                color="green"
-                variant={"filled"}
-                sx={(theme) => ({
-                  "&:hover": {
-                    backgroundColor: `${theme.colors.green[8]} !important`,
-                    cursor: "default",
-                  },
-                  "&:active": {
-                    transform: "none !important",
-                  },
-                })}
-              >
-                {streak} day streak
-              </Button>
-              <Button
-                onClick={() => {
-                  if (numLikes > 0) {
-                    openLike();
-                  }
-                }}
-                leftIcon={<FaHeart />}
-                color="gray"
-                variant={"outline"}
-                sx={(theme) => ({
-                  "&:hover": {
-                    backgroundColor:
-                      numLikes > 0 ? "lightGray" : "transparent !important",
-                    cursor: numLikes > 0 ? "pointer" : "default",
-                  },
-                  "&:active": {
-                    transform:
-                      numLikes > 0
-                        ? theme.activeStyles.transform
-                        : "none !important",
-                  },
-                })}
-              >
-                {numLikes} {pluralize("like", numLikes)}
-              </Button>
-              <Button
-                leftIcon={<MdOutlineComment />}
-                onClick={() => {
-                  if (numComments > 0) {
-                    openComment();
-                  }
-                }}
-                color="gray"
-                variant={"outline"}
-                sx={(theme) => ({
-                  "&:hover": {
-                    backgroundColor:
-                      numComments > 0 ? "lightGray" : "transparent !important",
-                    cursor: numComments > 0 ? "pointer" : "default",
-                  },
-                  "&:active": {
-                    transform:
-                      numComments > 0
-                        ? theme.activeStyles.transform
-                        : "none !important",
-                  },
-                })}
-              >
-                {numComments} {pluralize("comment", numComments)}
-              </Button>
-            </Stack>
           </Flex>
         ) : (
           <Flex

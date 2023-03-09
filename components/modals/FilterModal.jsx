@@ -1,9 +1,8 @@
-import { Modal, SegmentedControl, Stack } from "@mantine/core";
+import { Modal, SegmentedControl, Stack, Text } from "@mantine/core";
 import { MdOutlineDateRange } from "react-icons/md";
 import { DatePickerInput } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
 import { useDidUpdate } from "@mantine/hooks";
-
 import { pluralize } from "@/utils/pluralize";
 
 export default function FilterModal({
@@ -17,28 +16,28 @@ export default function FilterModal({
 }) {
   useDidUpdate(() => {
     if (!feedPosts) {
-      notifications.show({
-        message: `No posts found for or ${
-          feedFilter.type
-        } on ${feedFilter.date.toLocaleString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })}`,
-        color: "blue",
-      });
+      // notifications.show({
+      //   message: `No posts found for or ${
+      //     feedFilter.type
+      //   } on ${feedFilter.date.toLocaleString("en-US", {
+      //     month: "long",
+      //     day: "numeric",
+      //     year: "numeric",
+      //   })}`,
+      //   color: "blue",
+      // });
     } else {
-      notifications.show({
-        message: `Showing ${feedPosts.length} ${pluralize(
-          "post",
-          feedPosts.length
-        )} for ${feedFilter.type} on ${feedFilter.date.toLocaleString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })}`,
-        color: "blue",
-      });
+      // notifications.show({
+      //   message: `Showing ${feedPosts.length} ${pluralize(
+      //     "post",
+      //     feedPosts.length
+      //   )} for ${feedFilter.type} on ${feedFilter.date.toLocaleString("en-US", {
+      //     month: "long",
+      //     day: "numeric",
+      //     year: "numeric",
+      //   })}`,
+      //   color: "blue",
+      // });
     }
   }, [feedFilter, feedPosts]);
 
@@ -46,13 +45,29 @@ export default function FilterModal({
     <Modal
       opened={opened}
       onClose={close}
-      title="Filter posts"
+      title={`${feedFilter.type} on ${feedFilter.date.toLocaleString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })}`}
       returnFocus={false}
       centered
       size="sm"
       padding={"xl"}
+      overlayProps={{
+        blur: 3,
+        opacity: 0.55,
+      }}
     >
       <Stack w={"100%"} align={"center"} justify={"center"} spacing={"lg"}>
+        {/* <Text mt={"-0.25rem"} mb={"-0.5rem"}>
+          {feedFilter.type} on{" "}
+          {feedFilter.date.toLocaleString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </Text> */}
         <DatePickerInput
           w={"100%"}
           icon={<MdOutlineDateRange />}

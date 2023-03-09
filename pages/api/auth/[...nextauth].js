@@ -11,25 +11,29 @@ export default NextAuth({
     async signIn({ account, user }) {
       if (account.provider !== "spotify") return false;
 
-      const { name, email, image } = user;
-      await client.createIfNotExists({
-        _type: "user",
-        _id: name,
-        name,
-        email,
-        image,
-        postStreak: 0,
-        createdAt: new Date().toISOString(),
-        posts: [],
-        likes: [],
-        comments: [],
-        following: [],
-        followers: [],
-      });
+      try {
+        const { name, email, image } = user;
+        await client.createIfNotExists({
+          _type: "user",
+          _id: name,
+          name,
+          email,
+          image,
+          postStreak: 0,
+          createdAt: new Date().toISOString(),
+          posts: [],
+          likes: [],
+          comments: [],
+          following: [],
+          followers: [],
+        });
 
-      user.access_token = account.access_token;
+        user.access_token = account.access_token;
 
-      return true;
+        return true;
+      } catch {
+        return false;
+      }
     },
     async jwt({ token, user }) {
       if (user) {
@@ -43,7 +47,7 @@ export default NextAuth({
     },
   },
   pages: {
-    error: "/",
+    error: process.env.NEXT_PUBLIC_URL,
   },
   providers: [
     SpotifyProvider({

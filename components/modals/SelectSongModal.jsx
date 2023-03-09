@@ -11,7 +11,6 @@ import {
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import Post from "../Post";
 import { forwardRef, useState } from "react";
-import { notifications } from "@mantine/notifications";
 import axios from "axios";
 
 const SelectItem = forwardRef(
@@ -38,9 +37,12 @@ export default function SelectSongModal({
   spotifyData,
   currentlyPlaying,
   setCurrentlyPlaying,
-  setStreak,
   session,
   setPost,
+  originalCaption,
+  setOriginalCaption,
+  editingCaption,
+  setEditingCaption,
 }) {
   const theme = useMantineTheme();
   const [isLoading, setIsLoading] = useState(false);
@@ -49,33 +51,24 @@ export default function SelectSongModal({
 
   const postSong = async () => {
     setIsLoading(true);
-    setPost({
-      ...selectedSongData,
-      username: session.user.name,
-      userImage: session.user.image,
-    });
-    setStreak((prev) => prev + 1);
     try {
-      await axios.post("/api/protected/post", {
+      const { _id } = await axios.post("/api/protected/post", {
         ...selectedSongData,
         name: session.user.name,
       });
-      notifications.show({
-        title: "Success",
-        message: "Your song was posted",
-        color: "green",
+      setPost({
+        ...selectedSongData,
+        _id,
+        username: session.user.name,
+        userImage: session.user.image,
       });
+      setOriginalCaption(selectedSongData?.caption || "");
+      setEditingCaption(originalCaption.length === 0);
       setIsLoading(false);
       close();
     } catch {
-      setPost(null);
-      setStreak((prev) => prev - 1);
       setIsLoading(false);
-      notifications.show({
-        title: "Error",
-        message: "Something went wrong",
-        color: "red",
-      });
+      setPost(null);
     }
   };
 
@@ -92,6 +85,10 @@ export default function SelectSongModal({
       title="Choose a song"
       centered
       padding={"xl"}
+      overlayProps={{
+        blur: 3,
+        opacity: 0.55,
+      }}
     >
       <Select
         radius={"0.25rem"}
@@ -146,10 +143,16 @@ export default function SelectSongModal({
       {selectedSong && (
         <Center mt={16} mb={18}>
           <Post
-            withHeader={false}
+            isUser={true}
+            isSelect={true}
             post={selectedSongData}
+            setPost={setSelectedSongData}
             currentlyPlaying={currentlyPlaying}
             setCurrentlyPlaying={setCurrentlyPlaying}
+            originalCaption={originalCaption}
+            setOriginalCaption={setOriginalCaption}
+            editingCaption={editingCaption}
+            setEditingCaption={setEditingCaption}
           />
         </Center>
       )}

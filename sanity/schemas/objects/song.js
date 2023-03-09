@@ -1,12 +1,7 @@
 export default {
-  name: 'post',
-  title: 'Post',
-  type: 'document',
-  preview: {
-    select: {
-      title: 'songName',
-    },
-  },
+  name: 'song',
+  title: 'Song',
+  type: 'object',
   fields: [
     {
       name: 'songName',
@@ -56,36 +51,6 @@ export default {
       title: 'Played At',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
-    },
-    {
-      name: 'createdAt',
-      title: 'Created At',
-      type: 'datetime',
-      initialValue: new Date().toISOString(),
-    },
-    {
-      name: 'caption',
-      title: 'Caption',
-      type: 'string',
-    },
-    {
-      name: 'user',
-      title: 'User',
-      type: 'reference',
-      to: {type: 'user'},
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      name: 'likes',
-      title: 'Likes',
-      type: 'array',
-      of: [{type: 'like'}],
-    },
-    {
-      name: 'comments',
-      title: 'Comments',
-      type: 'array',
-      of: [{type: 'comment'}],
     },
   ],
 }

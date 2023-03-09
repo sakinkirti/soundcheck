@@ -37,6 +37,12 @@ export default {
       type: 'number',
       initialValue: 0,
     },
+    // {
+    //   name: "recentlyPlayed",
+    //   title: "Recently Played",
+    //   type: "array",
+    //   of: [{ type: "song" }],
+    // },
     {
       name: 'posts',
       title: 'Posts',

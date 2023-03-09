@@ -1,19 +1,32 @@
 import { Flex, Button, Title } from "@mantine/core";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { BsSpotify } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { notifications } from "@mantine/notifications";
 
 function Index() {
   const [isLoading, setIsLoading] = useState(false);
-  const { status } = useSession();
+  const [hasShownError, setHasShownError] = useState(false);
   const router = useRouter();
+  const { error } = router.query;
 
   useEffect(() => {
-    if (status === "authenticated") {
-      router.push("/home");
+    if (error === "AccessDenied") {
+      setHasShownError(true);
+      window.history.replaceState(null, "", `${process.env.NEXT_PUBLIC_URL}/`);
     }
-  }, [status]);
+  }, [error]);
+
+  useEffect(() => {
+    if (hasShownError) {
+      notifications.show({
+        title: "Sign in failed",
+        message: "Please try again",
+        color: "red",
+      });
+    }
+  }, [hasShownError]);
 
   return (
     <Flex
@@ -42,6 +55,19 @@ function Index() {
       </Button>
     </Flex>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const session = await getSession({ req });
+
+  if (session) {
+    res.writeHead(302, { Location: "/home" });
+    res.end();
+  }
+
+  return {
+    props: {},
+  };
 }
 
 export default Index;

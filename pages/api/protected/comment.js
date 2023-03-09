@@ -8,6 +8,17 @@ export default async function handler(req, res) {
   const { postID, name, text, createdAt } = req.body;
 
   try {
+    const newComment = {
+      _key: createdAt,
+      _type: "comment",
+      text,
+      user: {
+        _type: "reference",
+        _ref: name,
+      },
+      createdAt,
+    };
+
     await client
       .patch(name)
       .append("comments", [
@@ -18,24 +29,11 @@ export default async function handler(req, res) {
         },
       ])
       .commit();
-    await client
-      .patch(postID)
-      .append("comments", [
-        {
-          _key: createdAt,
-          _type: "comment",
-          text,
-          user: {
-            _type: "reference",
-            _ref: name,
-          },
-          createdAt,
-        },
-      ])
-      .commit();
+    await client.patch(postID).append("comments", [newComment]).commit();
 
-    return res.status(200).json({ message: "Success" });
-  } catch {
+    return res.status(200).json({ message: "Success", newComment });
+  } catch (e) {
+    console.log(e);
     return res.status(500).json({ message: "Internal server error" });
   }
 }

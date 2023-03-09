@@ -44,7 +44,6 @@ export default function App({
                 "#c0c1c4",
               ],
               lightGray: ["#3C3F42", ...emptyColors(7), "#25262b"],
-              heartRed: [...emptyColors(8), "#f87171"],
             },
             primaryColor: "spotify",
             components: {

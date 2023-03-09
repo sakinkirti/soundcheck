@@ -6,19 +6,43 @@ import { hasPostedTodayQuery, todayPostsQuery } from "@/lib/queries";
 import { useState } from "react";
 import { serverLogout } from "@/utils/serverLogout";
 import Post from "@/components/Post";
-import { Flex, Button, Text } from "@mantine/core";
+import { Flex, Button, Text, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import FilterModal from "@/components/modals/FilterModal";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
-function Home({ spotifyData, userPost, todayPosts, postStreak }) {
+function Home({ spotifyData, userPost, todayPosts }) {
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
-  const [feedPosts, setFeedPosts] = useState(todayPosts);
+  const [posts, setPosts] = useState({
+    feedPosts: todayPosts,
+    userPost,
+  });
   const [feedFilter, setFeedFilter] = useState({
     date: new Date(),
     type: "Everyone",
   });
   const [filterOpened, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
+  TimeAgo.addDefaultLocale(en);
+  const timeAgo = new TimeAgo("en-US");
+  const feedPosts = posts?.feedPosts;
+  const setFeedPosts = (posts) => {
+    setPosts({ ...posts, feedPosts: posts });
+  };
+  const setFeedPost = (post) => {
+    setPosts({
+      ...posts,
+      feedPosts: [...feedPosts.filter((p) => p._id !== post._id), post].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      ),
+    });
+  };
+  const setUserPost = (post) => {
+    setPosts({ ...posts, userPost: post });
+  };
+
+  // console.log(posts.feedPosts);
 
   return (
     <>
@@ -38,59 +62,95 @@ function Home({ spotifyData, userPost, todayPosts, postStreak }) {
         }}
         justify={"space-between"}
         align={"stretch"}
+        direction={"column"}
       >
         <Flex
-          gap={10}
-          justify={"space-evenly"}
-          align={"center"}
-          wrap={"wrap"}
-          w={"80%"}
+          w={"75%"}
           h="100%"
+          justify={"center"}
+          align={"center"}
           style={{
             transform: "translateY(5rem)",
           }}
+          direction={"column"}
         >
-          <Button
-            variant="light"
-            color="gray"
-            size="sm"
-            onClick={openFilter}
-            sx={{
-              position: "fixed",
-              top: "2rem",
-              left: "2rem",
-              zIndex: 1000,
+          <Flex
+            w="100%"
+            justify={"center"}
+            align={"center"}
+            style={{
+              transform: "translateY(-4rem)",
             }}
           >
-            {feedFilter.type} on{" "}
-            {feedFilter.date.toLocaleString("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </Button>
+            <Button variant="light" color="gray" size="sm" onClick={openFilter}>
+              {feedFilter.type} on{" "}
+              {feedFilter.date.toLocaleString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </Button>
+          </Flex>
+
           {!feedPosts ? (
             <Text fz={"lg"}>
-              No posts found. Try a different filter or check back later...
+              {`No posts found for ${feedFilter.type.toLowerCase()} on ${feedFilter.date.toLocaleString(
+                "en-US",
+                {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }
+              )}`}
             </Text>
           ) : (
-            feedPosts?.map((post) => (
-              <Post
-                key={post._id}
-                post={post}
-                currentlyPlaying={currentlyPlaying}
-                setCurrentlyPlaying={setCurrentlyPlaying}
-              />
-            ))
+            <ScrollArea
+              w="75%"
+              h={500}
+              // h={475}
+              // type="never"
+              type="hover"
+              // type="always"
+              pt={"2rem"}
+              styles={{
+                scrollbar: {
+                  transform: "translateY(2rem)",
+                },
+              }}
+              style={{
+                transform: "translateY(-2rem)",
+              }}
+            >
+              <Flex
+                gap={"2.5rem"}
+                justify={"space-evenly"}
+                align={"center"}
+                wrap={"wrap"}
+                w={"100%"}
+                h="100%"
+              >
+                {feedPosts?.map((post) => (
+                  <Post
+                    key={post._id}
+                    post={post}
+                    setPost={setFeedPost}
+                    currentlyPlaying={currentlyPlaying}
+                    setCurrentlyPlaying={setCurrentlyPlaying}
+                    timeAgo={timeAgo}
+                  />
+                ))}
+              </Flex>
+            </ScrollArea>
           )}
         </Flex>
 
         <Rightbar
-          postStreak={postStreak}
           spotifyData={spotifyData}
-          userPost={userPost}
+          post={posts?.userPost}
+          setPost={setUserPost}
           currentlyPlaying={currentlyPlaying}
           setCurrentlyPlaying={setCurrentlyPlaying}
+          timeAgo={timeAgo}
         />
       </Flex>
     </>
@@ -109,7 +169,7 @@ export async function getServerSideProps({ req, res }) {
     today.setHours(0, 0, 0, 0);
     const todaysString = today.toISOString();
 
-    const { userPost, postStreak } = await client.fetch(hasPostedTodayQuery, {
+    const { userPost } = await client.fetch(hasPostedTodayQuery, {
       name: session?.user?.name,
       todayStart: todaysString,
     });
@@ -124,7 +184,6 @@ export async function getServerSideProps({ req, res }) {
         props: {
           userPost,
           todayPosts,
-          postStreak,
         },
       };
     }
@@ -135,7 +194,6 @@ export async function getServerSideProps({ req, res }) {
       props: {
         todayPosts,
         spotifyData,
-        postStreak,
       },
     };
   } catch {

@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   }
 
   const {
+    caption,
     songName,
     songUrl,
     previewUrl,
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
   try {
     const { _id } = await client.create({
       _type: "post",
+      caption,
       songName,
       songUrl,
       previewUrl,
@@ -28,6 +30,8 @@ export default async function handler(req, res) {
       albumName,
       albumUrl,
       albumImage,
+      likes: [],
+      comments: [],
       playedAt: new Date(playedAt).toISOString(),
       createdAt: new Date().toISOString(),
       user: {
@@ -65,7 +69,7 @@ export default async function handler(req, res) {
       ])
       .commit();
 
-    return res.status(200).json({ message: "Success" });
+    return res.status(200).json({ message: "Success", _id });
   } catch {
     return res.status(500).json({ message: "Internal server error" });
   }
