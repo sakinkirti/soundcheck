@@ -9,11 +9,11 @@ export default async function handler(req, res) {
 
   try {
     await client
-      .patch(name)
+      .patch(postID)
       .unset([`comments[_key == \"${key}\"]`])
       .commit();
     await client
-      .patch(postID)
+      .patch(name)
       .unset([`comments[_key == \"${key}\"]`])
       .commit();
 

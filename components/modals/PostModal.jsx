@@ -19,8 +19,12 @@ export default function PostModal({
   isSelect,
   isRightbar,
   isCaptionLoading,
+  following,
+  setFollowing,
 }) {
   const [currEditing, setCurrEditing] = useState(false);
+  const [isCommentLoading, setIsCommentLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
   useDidUpdate(() => {
     if (!isSelect && isRightbar) {
@@ -42,12 +46,12 @@ export default function PostModal({
       opened={opened}
       centered
       onClose={() => {
-        if (!isCaptionLoading) {
-          close();
-        }
+        if (isCaptionLoading || isCommentLoading || isDeleteLoading) return;
+        close();
       }}
       withCloseButton={false}
       padding={0}
+      trapFocus={false}
     >
       <Post
         post={post}
@@ -64,6 +68,12 @@ export default function PostModal({
         setParentCaption={setCaption}
         setParentEditingCaption={setEditingCaption}
         isRightbar={false}
+        isDeleteLoading={isDeleteLoading}
+        setIsDeleteLoading={setIsDeleteLoading}
+        isCommentLoading={isCommentLoading}
+        setIsCommentLoading={setIsCommentLoading}
+        following={following}
+        setFollowing={setFollowing}
       />
     </Modal>
   );

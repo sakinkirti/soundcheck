@@ -1,6 +1,6 @@
-import { Flex, Button } from "@mantine/core";
+import { Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Post from "./Post";
 import SelectSongModal from "./modals/SelectSongModal";
@@ -20,14 +20,6 @@ function Rightbar({
   const selectRef = useRef(null);
   const { data: session } = useSession();
   const [editingCaption, setEditingCaption] = useState(!originalCaption);
-
-  useEffect(() => {
-    if (selectSongOpened) {
-      setTimeout(() => {
-        selectRef?.current?.focus();
-      }, 200);
-    }
-  }, [selectRef?.current]);
 
   return (
     <>
@@ -64,7 +56,7 @@ function Rightbar({
           zIndex: 1,
         }}
       >
-        {hasPostedToday ? (
+        {hasPostedToday && (
           <Flex
             justify={"center"}
             align={"center"}
@@ -84,27 +76,6 @@ function Rightbar({
               timeAgo={timeAgo}
               isRightbar
             />
-          </Flex>
-        ) : (
-          <Flex
-            justify={"center"}
-            align={"center"}
-            direction={"column"}
-            gap={16}
-            h={"100%"}
-          >
-            <Button
-              size={"md"}
-              onClick={() => {
-                openSelectSong();
-                setTimeout(() => {
-                  selectRef?.current?.focus();
-                }, 200);
-              }}
-              disabled={selectSongOpened}
-            >
-              Choose a song
-            </Button>
           </Flex>
         )}
       </Flex>

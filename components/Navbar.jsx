@@ -80,7 +80,7 @@ function Navbar({ children }) {
                     radius="xl"
                     size={27}
                     sx={(theme) => ({
-                      border: `1.25px solid ${theme.colors.lightWhite[8]}`,
+                      border: `1px solid ${theme.colors.lightWhite[8]}`,
                     })}
                   />
                   <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>

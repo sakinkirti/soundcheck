@@ -12,11 +12,12 @@ import FilterModal from "@/components/modals/FilterModal";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 
-function Home({ spotifyData, userPost, todayPosts }) {
+function Home({ spotifyData, userPost, todayPosts, following }) {
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const [posts, setPosts] = useState({
     feedPosts: todayPosts,
     userPost,
+    following: following.map((f) => f._ref),
   });
   const [feedFilter, setFeedFilter] = useState({
     date: new Date(),
@@ -33,16 +34,21 @@ function Home({ spotifyData, userPost, todayPosts }) {
   const setFeedPost = (post) => {
     setPosts({
       ...posts,
-      feedPosts: [...feedPosts.filter((p) => p._id !== post._id), post].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      ),
+      feedPosts: feedPosts.map((p) => (p._id === post._id ? post : p)),
     });
   };
   const setUserPost = (post) => {
-    setPosts({ ...posts, userPost: post });
+    setPosts({
+      ...posts,
+      userPost: post,
+    });
   };
-
-  // console.log(posts.feedPosts);
+  const setFollowing = (following) => {
+    setPosts({
+      ...posts,
+      following,
+    });
+  };
 
   return (
     <>
@@ -107,10 +113,7 @@ function Home({ spotifyData, userPost, todayPosts }) {
             <ScrollArea
               w="75%"
               h={500}
-              // h={475}
-              // type="never"
               type="hover"
-              // type="always"
               pt={"2rem"}
               styles={{
                 scrollbar: {
@@ -137,6 +140,8 @@ function Home({ spotifyData, userPost, todayPosts }) {
                     currentlyPlaying={currentlyPlaying}
                     setCurrentlyPlaying={setCurrentlyPlaying}
                     timeAgo={timeAgo}
+                    following={posts?.following}
+                    setFollowing={setFollowing}
                   />
                 ))}
               </Flex>
@@ -169,7 +174,7 @@ export async function getServerSideProps({ req, res }) {
     today.setHours(0, 0, 0, 0);
     const todaysString = today.toISOString();
 
-    const { userPost } = await client.fetch(hasPostedTodayQuery, {
+    const { userPost, following } = await client.fetch(hasPostedTodayQuery, {
       name: session?.user?.name,
       todayStart: todaysString,
     });
@@ -184,16 +189,22 @@ export async function getServerSideProps({ req, res }) {
         props: {
           userPost,
           todayPosts,
+          following,
         },
       };
     }
 
     const spotifyData = await fetchSpotify(session?.user?.access_token);
 
+    if (!spotifyData) {
+      serverLogout(res);
+    }
+
     return {
       props: {
         todayPosts,
-        spotifyData,
+        spotifyData: spotifyData || null,
+        following,
       },
     };
   } catch {

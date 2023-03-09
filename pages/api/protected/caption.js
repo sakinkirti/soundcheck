@@ -15,8 +15,6 @@ export default async function handler(req, res) {
       })
       .commit();
 
-    console.log(req.body);
-
     return res.status(200).json({ message: "Success" });
   } catch {
     return res.status(500).json({ message: "Something went wrong" });
