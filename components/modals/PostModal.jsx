@@ -44,7 +44,7 @@ export default function PostModal({
         opacity: 0.55,
       }}
       opened={opened}
-      centered
+      // centered
       onClose={() => {
         if (isCaptionLoading || isCommentLoading || isDeleteLoading) return;
         close();

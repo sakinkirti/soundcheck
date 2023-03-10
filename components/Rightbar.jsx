@@ -64,7 +64,7 @@ function Rightbar({
             h={"100%"}
           >
             <Post
-              isUser={true}
+              isUser
               post={post}
               setPost={setPost}
               currentlyPlaying={currentlyPlaying}

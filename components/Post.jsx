@@ -302,36 +302,6 @@ function Post({
     }
   };
 
-  const getScrollHeight = () => {
-    if (commentEditing) {
-      return "150px";
-    }
-    if (editingCaption) {
-      return "125px";
-    }
-    if (!isPostModal) {
-      return "175px";
-    }
-    if (isUser) {
-      return "175px";
-    }
-    if (post?.caption) {
-      return "135px";
-    }
-  };
-
-  const getModalBottomPad = () => {
-    if (isPostModal) {
-      if (isUser) {
-        return "0rem";
-      }
-      if (post?.caption) {
-        return "3.5rem";
-      }
-    }
-    return "0rem";
-  };
-
   useEffect(() => {
     audioRef.current.addEventListener("play", () => {
       setCurrentlyPlaying(post?._id);
@@ -402,13 +372,15 @@ function Post({
         direction={"column"}
         px={"1.5rem"}
         pt={isUser && "0.75rem"}
+        maw={425}
+        mah={"100%"}
+        pb={
+          isPostModal && numComments > 0 && !commentEditing ? ".75rem" : "0rem"
+        }
         sx={{
           borderRadius: "0.5rem !important",
           overflowY: "hidden !important",
         }}
-        maw={425}
-        mah={"100%"}
-        pb={getModalBottomPad()}
       >
         {!isUser && (
           <Flex
@@ -560,7 +532,7 @@ function Post({
                     <FaHeart
                       fontSize={"0.9rem"}
                       style={{
-                        color: "#f87171",
+                        color: numLikes > 0 ? "#f87171" : "#c1c2c5",
                       }}
                     />
                     <Text
@@ -911,7 +883,8 @@ function Post({
                   ) : (
                     <Button
                       mt={"0.5rem"}
-                      mb="1rem"
+                      mb="1.1rem"
+                      // mb="1rem"
                       onClick={() => setCommentEditing(true)}
                       leftIcon={<AiOutlineComment />}
                       variant={"light"}
@@ -936,13 +909,6 @@ function Post({
                         isComment
                       />
                       <Button
-                        mb={
-                          isUser
-                            ? "-0.2rem"
-                            : post?.caption
-                            ? "-3.65rem"
-                            : "0rem"
-                        }
                         style={{
                           zIndex: 1000,
                         }}
@@ -1022,32 +988,37 @@ function Post({
               )}
               {isPostModal ? (
                 <Stack w="100%" mt={"0.5rem"} px={"0.75rem"}>
-                  {post?.comments?.length === 0 && !commentEditing ? (
+                  {!post?.comments?.length && !commentEditing ? (
                     <Center
-                      pb={"0.5rem"}
-                      mt={commentEditing ? "-0rem" : "-1rem"}
-                      mb={6}
+                      mt={"-.25rem"}
+                      mb={"0.1rem"}
+                      style={{
+                        cursor: "default",
+                        transform: "translateY(-0.75rem)",
+                      }}
                     >
                       <Text color="dimmed" fontSize={"0.9rem"}>
                         No comments
                       </Text>
                     </Center>
                   ) : (
-                    <Stack w={"100%"}>
+                    <Stack>
                       {!commentEditing && (
                         <ScrollArea
+                          h={editingCaption ? "123px" : "137px"}
                           type={"always"}
                           offsetScrollbars
-                          h={getScrollHeight()}
-                          mt={commentEditing ? "0.25rem" : "-.75rem"}
-                          mb={
-                            isPostModal
-                              ? isUser
-                                ? ".525rem"
-                                : "-3rem"
-                              : "0.1rem"
-                          }
+                          mt={"-.5rem"}
                           px={"0.5rem"}
+                          mb={"-0.5rem"}
+                          styles={{
+                            scrollbar: {
+                              "&, &:hover": {
+                                background: "#212227",
+                                borderRadius: "0.5rem",
+                              },
+                            },
+                          }}
                         >
                           <Stack
                             align="start"

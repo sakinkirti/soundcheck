@@ -11,6 +11,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: "Bad request" });
   }
 
+  let created = createdAt;
+
   try {
     if (type === "edit") {
       await client
@@ -21,16 +23,17 @@ export default async function handler(req, res) {
         .patch(name)
         .unset([`comments[_key == \"${createdAt}\"]`])
         .commit();
+      created = new Date().toISOString();
     }
     const newComment = {
-      _key: createdAt,
+      _key: created,
       _type: "comment",
       text,
       user: {
         _type: "reference",
         _ref: name,
       },
-      createdAt,
+      createdAt: created,
     };
     await client
       .patch(name)
@@ -38,7 +41,7 @@ export default async function handler(req, res) {
         {
           _type: "reference",
           _ref: postID,
-          _key: createdAt,
+          _key: created,
         },
       ])
       .commit();

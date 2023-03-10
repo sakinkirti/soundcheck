@@ -85,8 +85,9 @@ function Home({ spotifyData, userPost, todayPosts, following }) {
             justify={"center"}
             align={"center"}
             style={{
-              transform: "translateY(-4rem)",
+              transform: "translateY(-3rem)",
             }}
+            mb={"1rem"}
           >
             <Button variant="light" color="gray" size="sm" onClick={openFilter}>
               {feedFilter.type} on{" "}
@@ -113,15 +114,25 @@ function Home({ spotifyData, userPost, todayPosts, following }) {
             <ScrollArea
               w="75%"
               h={500}
-              type="hover"
-              pt={"2rem"}
+              type="always"
+              // mt={"2rem"}
+              // pt={"2rem"}
+              // styles={{
+              //   scrollbar: {
+              //     transform: "translateY(2rem)",
+              //   },
+              // }}
+              // style={{
+              //   transform: "translateY(-2rem)",
+              // }}
+              offsetScrollbars
               styles={{
                 scrollbar: {
-                  transform: "translateY(2rem)",
+                  "&, &:hover": {
+                    background: "#212227",
+                    borderRadius: "0.5rem",
+                  },
                 },
-              }}
-              style={{
-                transform: "translateY(-2rem)",
               }}
             >
               <Flex
@@ -203,7 +214,7 @@ export async function getServerSideProps({ req, res }) {
     return {
       props: {
         todayPosts,
-        spotifyData: spotifyData || null,
+        spotifyData,
         following,
       },
     };
