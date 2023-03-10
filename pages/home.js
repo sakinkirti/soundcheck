@@ -99,7 +99,7 @@ function Home({ spotifyData, userPost, todayPosts, following }) {
             </Button>
           </Flex>
 
-          {!feedPosts ? (
+          {!feedPosts?.length ? (
             <Text fz={"lg"}>
               {`No posts found for ${feedFilter.type.toLowerCase()} on ${feedFilter.date.toLocaleString(
                 "en-US",
