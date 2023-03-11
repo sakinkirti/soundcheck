@@ -1,11 +1,13 @@
 import client from "@/lib/sanity";
+import axios from "axios";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { postID, name, type, createdAt } = req.body;
+  const { postID, name, type, createdAt, playlistID, songID, accessToken } =
+    req.body;
 
   try {
     if (type === "like") {
@@ -33,6 +35,20 @@ export default async function handler(req, res) {
           },
         ])
         .commit();
+
+      try {
+        await axios.post(
+          `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+          {
+            uris: [`spotify:track:${songID}`],
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+      } catch {}
     } else if (type === "unlike") {
       await client
         .patch(name)
@@ -42,6 +58,24 @@ export default async function handler(req, res) {
         .patch(postID)
         .unset([`likes[user._ref == \"${name}\"]`])
         .commit();
+
+      try {
+        await axios.delete(
+          `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            data: {
+              tracks: [
+                {
+                  uri: `spotify:track:${songID}`,
+                },
+              ],
+            },
+          }
+        );
+      } catch {}
     }
 
     return res.status(200).json({ message: "Success" });

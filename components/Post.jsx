@@ -61,7 +61,6 @@ const CommentCard = ({
         borderRadius: "0.25rem",
         border: "0.75px solid rgba(201, 201, 201, 0.25)",
         backgroundColor: "rgba(0, 0, 0, 0.1)",
-        // backgroundColor: "rgba(0, 0, 0, 0.2)",
       }}
     >
       <Flex
@@ -291,6 +290,9 @@ function Post({
         name: session?.user?.name,
         type: isLiked ? "unlike" : "like",
         createdAt: now,
+        playlistID: session?.user?.playlistID,
+        songID: post?.songID,
+        accessToken: session?.user?.access_token,
       });
       setIsLikeLoading(false);
     } catch {
@@ -380,6 +382,7 @@ function Post({
         sx={{
           borderRadius: "0.5rem !important",
           overflowY: "hidden !important",
+          overflowX: isSelect && "hidden !important",
         }}
       >
         {!isUser && (
@@ -694,13 +697,19 @@ function Post({
               width={!isPostModal ? 275 : 375}
               height={!isPostModal ? 275 : 375}
               withPlaceholder
+              placeholder={
+                <Stack align="center">
+                  <Text>{post?.albumName}</Text>
+                  <Text>{post?.artists.join(", ")}</Text>
+                </Stack>
+              }
               style={{
                 opacity: imageHovered || isPlaying ? 0.3 : 1,
                 transition: "opacity 0.2s ease-in-out",
               }}
             />
 
-            {(imageHovered || isPlaying) && (
+            {(imageHovered || isPlaying) && !!post?.previewUrl && (
               <RingProgress
                 sx={{
                   position: "absolute",
@@ -758,7 +767,7 @@ function Post({
                 }
               />
             )}
-            {(imageHovered || isPlaying) && (
+            {(imageHovered || isPlaying) && !!post?.previewUrl && (
               <ActionIcon
                 title="Listen on Spotify"
                 component="a"
@@ -766,8 +775,6 @@ function Post({
                 target="_blank"
                 radius={"xl"}
                 size={isPostModal ? "2rem" : "1.6rem"}
-                // size={"2rem"}
-                // size={isPostModal ? "3rem" : "2rem"}
                 variant={"transparent"}
                 sx={{
                   cursor: "pointer !important",
@@ -779,7 +786,6 @@ function Post({
               >
                 <BsSpotify
                   fontSize={isPostModal ? "2rem" : "1.6rem"}
-                  // fontSize={isPostModal ? "2.25rem" : "1.5rem"}
                   style={{
                     cursor: "pointer !important",
                     color: theme.colors.spotify[8],

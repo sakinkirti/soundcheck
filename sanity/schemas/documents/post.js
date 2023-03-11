@@ -52,10 +52,9 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'playedAt',
-      title: 'Played At',
-      type: 'datetime',
-      validation: (Rule) => Rule.required(),
+      name: 'songID',
+      title: 'Song ID',
+      type: 'string',
     },
     {
       name: 'createdAt',

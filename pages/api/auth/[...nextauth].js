@@ -1,11 +1,12 @@
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
 import client from "@/lib/sanity";
+import axios from "axios";
 
 export default NextAuth({
   session: {
     strategy: "jwt",
-    maxAge: 3600,
+    maxAge: 60 * 60,
   },
   callbacks: {
     async signIn({ account, user }) {
@@ -13,7 +14,7 @@ export default NextAuth({
 
       try {
         const { name, email, image } = user;
-        await client.createIfNotExists({
+        const { playlistID } = await client.createIfNotExists({
           _type: "user",
           _id: name,
           name,
@@ -27,6 +28,44 @@ export default NextAuth({
           following: [],
           followers: [],
         });
+
+        let followsSoundcheck;
+        try {
+          const { data } = await axios.get(
+            `https://api.spotify.com/v1/playlists/${playlistID}/followers/contains?ids=${name}`,
+            {
+              headers: {
+                Authorization: `Bearer ${account.access_token}`,
+              },
+            }
+          );
+          followsSoundcheck = data[0];
+        } catch {
+          followsSoundcheck = false;
+        }
+
+        if (followsSoundcheck) {
+          user.playlistID = playlistID;
+        } else {
+          const {
+            data: { id },
+          } = await axios.post(
+            `https://api.spotify.com/v1/users/${name}/playlists`,
+            {
+              name: "Soundcheck!",
+              public: false,
+              collaborative: false,
+              description: "Liked songs from Soundcheck!",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${account.access_token}`,
+              },
+            }
+          );
+          await client.patch(name).set({ playlistID: id }).commit();
+          user.playlistID = id;
+        }
 
         user.access_token = account.access_token;
 

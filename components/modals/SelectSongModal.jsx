@@ -2,7 +2,7 @@ import {
   Modal,
   Select,
   Button,
-  Center,
+  Stack,
   Group,
   Avatar,
   Text,
@@ -90,21 +90,30 @@ export default function SelectSongModal({
       opened={opened}
       onClose={() => {}}
       withCloseButton={false}
-      title="Choose a song"
       centered
-      padding={"xl"}
       overlayProps={{
         blur: 3,
         opacity: 0.55,
       }}
+      size="auto"
+      styles={{
+        content: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      }}
     >
       <Select
+        w={!!selectedSong ? "100%" : 375}
+        mb={20}
         radius={"0.25rem"}
         ref={selectRef}
         defaultValue={selectedSong}
         withinPortal
         dropdownPosition="bottom"
-        placeholder="Pick one"
+        placeholder="Choose a song"
         itemComponent={SelectItem}
         data={
           spotifyData?.map((data) => ({
@@ -150,28 +159,28 @@ export default function SelectSongModal({
         }}
       />
 
-      {selectedSong && (
-        <Center mt={16} mb={18}>
-          <Post
-            isUser={true}
-            isSelect={true}
-            post={selectedSongData}
-            setPost={setSelectedSongData}
-            currentlyPlaying={currentlyPlaying}
-            setCurrentlyPlaying={setCurrentlyPlaying}
-            originalCaption={originalCaption}
-            setOriginalCaption={setOriginalCaption}
-            editingCaption={editingCaption}
-            setEditingCaption={setEditingCaption}
-          />
-        </Center>
+      {!!selectedSong && (
+        <Post
+          isUser={true}
+          isSelect={true}
+          post={selectedSongData}
+          setPost={setSelectedSongData}
+          currentlyPlaying={currentlyPlaying}
+          setCurrentlyPlaying={setCurrentlyPlaying}
+          originalCaption={originalCaption}
+          setOriginalCaption={setOriginalCaption}
+          editingCaption={editingCaption}
+          setEditingCaption={setEditingCaption}
+          isPostModal
+        />
       )}
 
       <Button
+        w={!!selectedSong ? "100%" : 375}
         onClick={postSong}
         fullWidth
         disabled={!selectedSong}
-        mt={12}
+        mt={20}
         loading={isLoading}
       >
         Post this song!

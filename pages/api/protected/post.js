@@ -15,8 +15,8 @@ export default async function handler(req, res) {
     albumName,
     albumUrl,
     albumImage,
-    playedAt,
     name,
+    songID,
   } = req.body;
 
   try {
@@ -30,9 +30,9 @@ export default async function handler(req, res) {
       albumName,
       albumUrl,
       albumImage,
+      songID,
       likes: [],
       comments: [],
-      playedAt: new Date(playedAt).toISOString(),
       createdAt: new Date().toISOString(),
       user: {
         _type: "reference",
